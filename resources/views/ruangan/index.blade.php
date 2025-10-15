@@ -56,7 +56,7 @@
         <div class="p-6 w-[400px]">
             <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 border-b pb-2 dark:border-gray-700">
                 Input Ruangan Baru</h3>
-            <form method="POST" action="#">
+            <form method="POST" action="#" enctype="multipart/form-data">
                 @csrf
                 <div class="space-y-2">
                     <div>
@@ -95,8 +95,8 @@
                         </select>
                     </div>
                     <div>
-                        <x-input-label for="nama_ruangan_r" value="Lantai" />
-                        <select name="lantai" required
+                        <x-input-label for="ukuran" value="Ukuran" />
+                        <select name="ukuran" required
                             class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             id="">
                             <option value="">-Pilih Ukuran-</option>

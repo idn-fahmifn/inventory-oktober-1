@@ -19,10 +19,8 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->group(functio
     Route::get('petugas', [ProfileController::class, 'index'])->name('petugas.index');
     Route::post('petugas', [ProfileController::class, 'store'])->name('petugas.store');
 
-    Route::get('ruangan', [RuanganController::class, 'index'])->name('ruangan.index');
-
-
-    
+    Route::get('ruangan', [RuanganController::class, 'index'])->name('ruangan.index');    
+    Route::post('ruangan', [RuanganController::class, 'store'])->name('ruangan.store');    
 });
 
 // route group user
