@@ -71,12 +71,13 @@
                     </div>
                     <div>
                         <x-input-label for="penanggung_jawab" value="Penanggung Jawab Ruangan" />
-                        <select name="lantai" required
+                        <select name="user_id" required
                             class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             id="">
-                            <option value="">-pilih lantai-</option>
-                            <option value="lantai 3">Lantai 3</option>
-                            <option value="lantai 3A">Lantai 3A</option>
+                            <option value="">-pilih petugas-</option>
+                            @foreach ($petugas as $row)
+                                <option value="{{ $row->id }}">{{ $row->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div>
@@ -108,7 +109,7 @@
                     <div>
                         <x-input-label for="gambar" value="Gambar Ruangan" />
                         <x-text-input id="gambar" name="gambar" type="file"
-                            class="mt-1 block w-full p-4 border border-gray-600" required />
+                            class="mt-1 block w-full p-4 border " required />
                     </div>
                     <div>
                         <x-input-label for="deskripsi_r" value="Deskripsi" />
