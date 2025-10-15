@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ruangan;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -28,7 +29,7 @@ class RuanganController extends Controller
 
         $simpan = [
             'user_id' => $request->input('user_id'),
-            'nama_rungan' => $request->input('nama_rungan'),
+            'nama_ruangan' => $request->input('nama_ruangan'),
             'kode_ruangan' => $request->input('kode_ruangan'),
             'lantai' => $request->input('lantai'),
             'ukuran' => $request->input('ukuran'),
@@ -39,11 +40,13 @@ class RuanganController extends Controller
         if($request->hasFile('gambar')){
             $path = 'public/images/ruangan'; // path
             $gambar = $request->file('gambar'); //gambar
-            $nama = 'gambar-ruangan_'.Carbon::now()->format('Ymdhis').$gambar->getClientOriginalExtension(); //mengganti nama
+            $nama = 'gambar-ruangan_'.Carbon::now()->format('Ymdhis').'.'.$gambar->getClientOriginalExtension(); //mengganti nama
             $simpan['gambar'] = $nama;
-            // $gambar->storeAs($path, $nama);
+            $gambar->storeAs($path, $nama);
         }
-        return $simpan;
+        // return $simpan;
+
+        Ruangan::create($simpan);
 
     }
 }

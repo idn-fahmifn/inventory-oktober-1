@@ -56,7 +56,7 @@
         <div class="p-6 w-[400px]">
             <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 border-b pb-2 dark:border-gray-700">
                 Input Ruangan Baru</h3>
-            <form method="POST" action="#" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('ruangan.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="space-y-2">
                     <div>
@@ -108,7 +108,7 @@
                     </div>
                     <div>
                         <x-input-label for="gambar" value="Gambar Ruangan" />
-                        <x-text-input id="gambar" name="gambar" type="file"
+                        <x-text-input id="gambar" name="gambar" type="file" accept="image/*"
                             class="mt-1 block w-full p-4 border " required />
                     </div>
                     <div>

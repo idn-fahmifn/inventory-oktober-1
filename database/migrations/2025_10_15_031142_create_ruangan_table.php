@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('nama_ruangan');
             $table->string('kode_ruangan')->unique();
             $table->string('lantai');
-            $table->integer('ukuran');
+            $table->string('ukuran');
             $table->string('gambar');
             $table->text('deskripsi');
 
