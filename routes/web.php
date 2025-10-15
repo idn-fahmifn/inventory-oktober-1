@@ -9,11 +9,16 @@ Route::get('/', function () {
 
 // group
 // route group admin
-Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->group(function () {
 
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('petugas', [ProfileController::class, 'index'])->name('petugas.index');
+    Route::post('petugas', [ProfileController::class, 'store'])->name('petugas.store');
+
+    
 });
 
 // route group user
