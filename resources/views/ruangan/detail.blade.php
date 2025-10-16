@@ -72,17 +72,18 @@
 
     <x-modal name="show-edit" :show="$errors->userDeletion->isNotEmpty()" focusable>
         <div class="p-6">
-            <form method="POST" action="{{ route('ruangan.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="" enctype="multipart/form-data">
                 @csrf
+                @method('put')
                 <div class="space-y-2">
                     <div>
                         <x-input-label for="kode_ruangan_r" value="Kode Ruangan" />
-                        <x-text-input id="kode_ruangan_r" name="kode_ruangan" type="text" class="mt-1 block w-full"
+                        <x-text-input id="kode_ruangan_r" name="kode_ruangan" value="{{ $data->kode_ruangan }}" type="text" class="mt-1 block w-full"
                             placeholder="Contoh: R-01" required />
                     </div>
                     <div>
                         <x-input-label for="nama_ruangan_r" value="Nama Ruangan" />
-                        <x-text-input id="nama_ruangan_r" name="nama_ruangan" type="text" class="mt-1 block w-full"
+                        <x-text-input id="nama_ruangan_r" name="nama_ruangan" type="text" value="{{ $data->nama_ruangan }}" class="mt-1 block w-full"
                             required />
                     </div>
                     <div>
@@ -90,7 +91,7 @@
                         <select name="user_id" required
                             class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             id="">
-                            <option value="">-pilih petugas-</option>
+                            <option value="{{ $data->user_id }}">{{ $data->petugas->name }}</option>
                             @foreach ($petugas as $row)
                                 <option value="{{ $row->id }}">{{ $row->name }}</option>
                             @endforeach
@@ -101,7 +102,7 @@
                         <select name="lantai" required
                             class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             id="">
-                            <option value="">-pilih lantai-</option>
+                            <option value="{{ $data->lantai }}">{{ $data->lantai }}</option>
                             <option value="basement">Basement</option>
                             <option value="grand floor">Grand Floor</option>
                             <option value="lantai 1">Lantai 1</option>
@@ -115,7 +116,7 @@
                         <select name="ukuran" required
                             class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             id="">
-                            <option value="">-Pilih Ukuran-</option>
+                            <option value="{{ $data->ukuran }}">{{ $data->ukuran }}</option>
                             <option value="small">small</option>
                             <option value="medium">medium</option>
                             <option value="large">large</option>
@@ -125,12 +126,17 @@
                     <div>
                         <x-input-label for="gambar" value="Gambar Ruangan" />
                         <x-text-input id="gambar" name="gambar" type="file" accept="image/*"
-                            class="mt-1 block w-full p-4 border " required />
+                            class="mt-1 block w-full p-4 border " />
                     </div>
                     <div>
                         <x-input-label for="deskripsi_r" value="Deskripsi" />
                         <textarea id="deskripsi_r" name="deskripsi"
-                            class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"></textarea>
+                            class="mt-1 block w-full border-gray-300 
+                            dark:border-gray-700 dark:bg-gray-900 
+                            dark:text-gray-300 focus:border-indigo-500 
+                            dark:focus:border-indigo-600 
+                            focus:ring-indigo-500 dark:focus:ring-indigo-600 
+                            rounded-md shadow-sm">{{ $data->deskripsi }}</textarea>
                     </div>
                 </div>
 
