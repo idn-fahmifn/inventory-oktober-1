@@ -48,7 +48,7 @@
                                         {{ $item->lantai }}
                                     </td>
                                     <td class="px-6 py-2 ">
-                                        <a href="{{ route('barang.show', $item->kode_ruangan) }}"
+                                        <a href="{{ route('barang.show', $item->kode_barang) }}"
                                             class="text-sm text-blue-500 dark:text-blue-200 font-semibold">Detail</a>
                                     </td>
                                 </tr>
