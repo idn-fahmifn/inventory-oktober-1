@@ -110,7 +110,7 @@ class BarangController extends Controller
         $request->validate([
             'nama_barang' => ['required', 'string', 'max:100'],
             'ruangan_id' => ['required', 'numeric'],
-            'kode_barang' => ['required', 'string', 'max:100', 'unique:barang'],
+            'kode_barang' => ['required', 'string', 'max:100'],
             'tipe' => ['required', 'string', 'max:20'],
             'brand' => ['required', 'string', 'max:20'],
             'kondisi' => ['required'],

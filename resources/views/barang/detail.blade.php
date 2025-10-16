@@ -109,7 +109,7 @@
                         <select name="ruangan_id" required
                             class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             id="">
-                            <option value="value="{{ $data->ruangan_id }}"">value="{{ $data->ruangan->nama_ruangan }}"</option>
+                            <option value="{{ $data->ruangan_id }}">{{ $data->ruangan->nama_ruangan }}</option>
                             @foreach ($ruangan as $row)
                                 <option value="{{ $row->id }}">{{ $row->nama_ruangan }}</option>
                             @endforeach
@@ -120,7 +120,7 @@
                         <select name="jenis" required
                             class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             id="">
-                            <option value="value="{{ $data->jenis }}"">value="{{ $data->jenis }}"</option>
+                            <option value="{{ $data->jenis }}">{{ $data->jenis }}"</option>
                             <option value="alat berat">Alat Berat</option>
                             <option value="elektronik">elektronik</option>
                             <option value="atk">atk</option>
@@ -134,7 +134,7 @@
                         <select name="kondisi" required
                             class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             id="">
-                            <option value="value="{{ $data->kondisi }}"">value="{{ $data->kondisi }}"</option>
+                            <option value="{{ $data->kondisi }}">{{ $data->kondisi }}</option>
                             <option value="baik">baik</option>
                             <option value="rusak">rusak</option>
                             <option value="sedang diperbaiki">sedang diperbaiki</option>
