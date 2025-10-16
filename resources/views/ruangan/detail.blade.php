@@ -17,7 +17,7 @@
                                 <p class="text-md text-gray-900 dark:text-gray-400 mt-2">
                                     Penanggung Jawab : <span class="font-bold">{{ $data->petugas->name }}</span>
                                 </p>
-                                 <p class="text-md text-gray-900 dark:text-gray-400 mt-2">
+                                <p class="text-md text-gray-900 dark:text-gray-400 mt-2">
                                     Lantai : <span class="font-bold">{{ $data->lantai }}</span>
                                 </p>
                                 <p class="text-md text-gray-900 dark:text-gray-400 mt-2">
@@ -37,7 +37,7 @@
                                     @endswitch
                                 </p>
 
-                                <img src="{{ asset('storage/images/ruangan/'.$data->gambar) }}" alt="gambar ruangan">
+                                <img src="{{ asset('storage/images/ruangan/' . $data->gambar) }}" alt="">
 
                                 <p class="text-md text-gray-900 dark:text-gray-400 mt-2">
                                     Deskripsi : <span class="font-bold">{{ $data->deskripsi }}</span>
@@ -55,7 +55,7 @@
                                 </form>
 
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -71,58 +71,79 @@
     </div>
 
     <x-modal name="show-edit" :show="$errors->userDeletion->isNotEmpty()" focusable>
-        <form method="post" action="" class="p-6">
-            @csrf
-            @method('put')
-            <div>
-                <x-input-label for="nama_ruangan" :value="__('Nama Ruangan')" />
-                <x-text-input id="nama_ruangan" name="nama_ruangan" type="text" class="mt-1 block w-full"
-                    :value="old('nama_ruangan', $data->nama_ruangan)" required autofocus autocomplete="nama_ruangan" />
-                <x-input-error class="mt-2" :messages="$errors->get('nama_ruangan')" />
-            </div>
+        <div class="p-6">
+            <form method="POST" action="{{ route('ruangan.store') }}" enctype="multipart/form-data">
+                @csrf
+                <div class="space-y-2">
+                    <div>
+                        <x-input-label for="kode_ruangan_r" value="Kode Ruangan" />
+                        <x-text-input id="kode_ruangan_r" name="kode_ruangan" type="text" class="mt-1 block w-full"
+                            placeholder="Contoh: R-01" required />
+                    </div>
+                    <div>
+                        <x-input-label for="nama_ruangan_r" value="Nama Ruangan" />
+                        <x-text-input id="nama_ruangan_r" name="nama_ruangan" type="text" class="mt-1 block w-full"
+                            required />
+                    </div>
+                    <div>
+                        <x-input-label for="penanggung_jawab" value="Penanggung Jawab Ruangan" />
+                        <select name="user_id" required
+                            class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                            id="">
+                            <option value="">-pilih petugas-</option>
+                            @foreach ($petugas as $row)
+                                <option value="{{ $row->id }}">{{ $row->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <x-input-label for="nama_ruangan_r" value="Lantai" />
+                        <select name="lantai" required
+                            class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                            id="">
+                            <option value="">-pilih lantai-</option>
+                            <option value="basement">Basement</option>
+                            <option value="grand floor">Grand Floor</option>
+                            <option value="lantai 1">Lantai 1</option>
+                            <option value="lantai 2">Lantai 2</option>
+                            <option value="lantai 3">Lantai 3</option>
+                            <option value="lantai 3A">Lantai 3A</option>
+                        </select>
+                    </div>
+                    <div>
+                        <x-input-label for="ukuran" value="Ukuran" />
+                        <select name="ukuran" required
+                            class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                            id="">
+                            <option value="">-Pilih Ukuran-</option>
+                            <option value="small">small</option>
+                            <option value="medium">medium</option>
+                            <option value="large">large</option>
+                            <option value="extra large">extra large</option>
+                        </select>
+                    </div>
+                    <div>
+                        <x-input-label for="gambar" value="Gambar Ruangan" />
+                        <x-text-input id="gambar" name="gambar" type="file" accept="image/*"
+                            class="mt-1 block w-full p-4 border " required />
+                    </div>
+                    <div>
+                        <x-input-label for="deskripsi_r" value="Deskripsi" />
+                        <textarea id="deskripsi_r" name="deskripsi"
+                            class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"></textarea>
+                    </div>
+                </div>
 
-            <div>
-                <x-input-label for="id_user" :value="__('Penanggung Jawab Ruangan')" />
-                <select name="id_user" required
-                    class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
-                    id="">
-                    <option value="{{ $data->id_user }}">{{ $data->petugas->name }}</option>
-                    @foreach ($petugas as $item)
-                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                    @endforeach
-                </select>
-                <x-input-error class="mt-2" :messages="$errors->get('id_user')" />
-            </div>
-
-            <div>
-                <x-input-label for="ukuran" :value="__('Ukuran Ruangan')" />
-                <select name="ukuran" required
-                    class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
-                    id="">
-                    <option value="{{ $data->ukuran }}">{{ $data->ukuran }}</option>
-                    <option value="kecil">Kecil</option>
-                    <option value="sedang">Sedang</option>
-                    <option value="besar">Besar</option>
-                </select>
-                <x-input-error class="mt-2" :messages="$errors->get('ukuran')" />
-            </div>
-
-            <div>
-                <x-input-label for="name" :value="__('Deskripsi Ruangan')" />
-                <textarea name="deskripsi"
-                    class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">{{ $data->deskripsi }}</textarea>
-                <x-input-error class="mt-2" :messages="$errors->get('name')" />
-            </div>
-
-            <div class="mt-6 flex justify-end">
-                <x-secondary-button x-on:click="$dispatch('close')">
-                    {{ __('Keluar') }}
-                </x-secondary-button>
-
-                <x-danger-button class="ms-3">
-                    {{ __('Simpan') }}
-                </x-danger-button>
-            </div>
-        </form>
+                <div class="mt-6 flex justify-end gap-3">
+                    <button type="button" x-on:click="$dispatch('close')""
+                        class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                        Batal
+                    </button>
+                    <x-primary-button class="ml-3">
+                        Simpan Ruangan
+                    </x-primary-button>
+                </div>
+            </form>
+        </div>
     </x-modal>
 </x-app-layout>
