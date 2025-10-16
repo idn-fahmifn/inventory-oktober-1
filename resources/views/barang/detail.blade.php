@@ -19,42 +19,42 @@
                         <div class="flex flex-col justify-center">
                             <div>
                                 <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100">
-                                    {{ $data->nama_ruangan }}
+                                    {{ $data->nama_barang }}
                                 </h1>
                                 <p class="text-md text-gray-900 dark:text-gray-400 mt-2">
-                                    Kode Ruangan : <span class="font-bold">{{ $data->kode_ruangan }}</span>
+                                    Kode Barang : <span class="font-bold">{{ $data->kode_barang }}</span>
                                 </p>
                                 <p class="text-md text-gray-900 dark:text-gray-400 mt-2">
-                                    Penanggung Jawab : <span class="font-bold">{{ $data->petugas->name }}</span>
+                                    Penyimpanan : <span class="font-bold">{{ $data->ruangan->nama_ruangan }}</span>
                                 </p>
                                 <p class="text-md text-gray-900 dark:text-gray-400 mt-2">
-                                    Lantai : <span class="font-bold">{{ $data->lantai }}</span>
+                                    Tipe : <span class="font-bold">{{ $data->tipe }}</span>
                                 </p>
                                 <p class="text-md text-gray-900 dark:text-gray-400 mt-2">
-                                    Ukuran :
+                                    Kondisi :
 
                                     @switch($data->ukuran)
-                                        @case('small')
-                                            <span class="text-blue-500">Ruangan Kecil</span>
+                                        @case('sedang diperbaiki')
+                                            <span class="text-yellow-500">maintenance</span>
                                         @break
 
-                                        @case('medium')
-                                            <span class="text-yellow-500">Ruangan Sedang</span>
+                                        @case('rusak')
+                                            <span class="text-red-500">broke</span>
                                         @break
 
                                         @default
-                                            <span class="text-green-500">Ruangan Besar</span>
+                                            <span class="text-green-500">maintenance</span>
                                     @endswitch
                                 </p>
 
-                                <img src="{{ asset('storage/images/ruangan/' . $data->gambar) }}" alt="">
+                                <img src="{{ asset('storage/images/barang/' . $data->gambar) }}" alt="">
 
                                 <p class="text-md text-gray-900 dark:text-gray-400 mt-2">
                                     Deskripsi : <span class="font-bold">{{ $data->deskripsi }}</span>
                                 </p>
 
 
-                                <form action="{{ route('ruangan.delete', $data->id) }}" method="post" class="py-6">
+                                <form action="{{ route('barang.destroy', $data->id) }}" method="post" class="py-6">
                                     @csrf
                                     @method('delete')
                                     <button type="submit" onclick="return confirm('Yakin mau dihapus?')"
@@ -80,81 +80,91 @@
 
     <x-modal name="show-edit" :show="$errors->userDeletion->isNotEmpty()" focusable>
         <div class="p-6">
-            <form method="POST" action="{{ route('ruangan.update', $data->id) }}" enctype="multipart/form-data">
+           <form method="POST" action="{{ route('barang.store') }}" enctype="multipart/form-data">
                 @csrf
-                @method('put')
                 <div class="space-y-2">
                     <div>
-                        <x-input-label for="kode_ruangan_r" value="Kode Ruangan" />
-                        <x-text-input id="kode_ruangan_r" name="kode_ruangan" value="{{ $data->kode_ruangan }}" type="text" class="mt-1 block w-full"
+                        <x-input-label for="kode_barang" value="Kode Barang" />
+                        <x-text-input id="kode_barang" name="kode_barang" value="{{ $data->kode_barang }}" type="text" class="mt-1 block w-full"
                             placeholder="Contoh: R-01" required />
                     </div>
                     <div>
-                        <x-input-label for="nama_ruangan_r" value="Nama Ruangan" />
-                        <x-text-input id="nama_ruangan_r" name="nama_ruangan" type="text" value="{{ $data->nama_ruangan }}" class="mt-1 block w-full"
+                        <x-input-label for="nama_barang_r" value="Nama Barang" />
+                        <x-text-input id="nama_barang_r" name="nama_barang" value="{{ $data->nama_barang }}" type="text" class="mt-1 block w-full"
+                            required />
+                    </div>
+                     <div>
+                        <x-input-label for="tipe_r" value="Tipe Barang" />
+                        <x-text-input id="tipe_r" name="tipe" type="text" value="{{ $data->tipe }}" class="mt-1 block w-full"
+                            required />
+                    </div>
+                     <div>
+                        <x-input-label for="brand_r" value="Brand / Merk" />
+                        <x-text-input id="brand_r" name="brand" type="text" value="{{ $data->brand }}" class="mt-1 block w-full"
                             required />
                     </div>
                     <div>
-                        <x-input-label for="penanggung_jawab" value="Penanggung Jawab Ruangan" />
-                        <select name="user_id" required
+                        <x-input-label for="penyimpanam" value="Penyimpanan" />
+                        <select name="ruangan_id" required
                             class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             id="">
-                            <option value="{{ $data->user_id }}">{{ $data->petugas->name }}</option>
-                            @foreach ($petugas as $row)
-                                <option value="{{ $row->id }}">{{ $row->name }}</option>
+                            <option value="value="{{ $data->ruangan_id }}"">value="{{ $data->ruangan->nama_ruangan }}"</option>
+                            @foreach ($ruangan as $row)
+                                <option value="{{ $row->id }}">{{ $row->nama_ruangan }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div>
-                        <x-input-label for="nama_ruangan_r" value="Lantai" />
-                        <select name="lantai" required
+                        <x-input-label for="" value="Jenis" />
+                        <select name="jenis" required
                             class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             id="">
-                            <option value="{{ $data->lantai }}">{{ $data->lantai }}</option>
-                            <option value="basement">Basement</option>
-                            <option value="grand floor">Grand Floor</option>
-                            <option value="lantai 1">Lantai 1</option>
-                            <option value="lantai 2">Lantai 2</option>
-                            <option value="lantai 3">Lantai 3</option>
-                            <option value="lantai 3A">Lantai 3A</option>
+                            <option value="value="{{ $data->jenis }}"">value="{{ $data->jenis }}"</option>
+                            <option value="alat berat">Alat Berat</option>
+                            <option value="elektronik">elektronik</option>
+                            <option value="atk">atk</option>
+                            <option value="alat kebersihan">alat kebersihan</option>
+                            <option value="kendaraan">kendaraan</option>
+                            <option value="lainnya">lainnya</option>
                         </select>
                     </div>
                     <div>
-                        <x-input-label for="ukuran" value="Ukuran" />
-                        <select name="ukuran" required
+                        <x-input-label for="" value="Kondisi" />
+                        <select name="kondisi" required
                             class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
                             id="">
-                            <option value="{{ $data->ukuran }}">{{ $data->ukuran }}</option>
-                            <option value="small">small</option>
-                            <option value="medium">medium</option>
-                            <option value="large">large</option>
-                            <option value="extra large">extra large</option>
+                            <option value="value="{{ $data->kondisi }}"">value="{{ $data->kondisi }}"</option>
+                            <option value="baik">baik</option>
+                            <option value="rusak">rusak</option>
+                            <option value="sedang diperbaiki">sedang diperbaiki</option>
                         </select>
                     </div>
                     <div>
-                        <x-input-label for="gambar" value="Gambar Ruangan" />
+                        <x-input-label for="gambar" value="Gambar barang" />
                         <x-text-input id="gambar" name="gambar" type="file" accept="image/*"
                             class="mt-1 block w-full p-4 border " />
                     </div>
                     <div>
                         <x-input-label for="deskripsi_r" value="Deskripsi" />
                         <textarea id="deskripsi_r" name="deskripsi"
-                            class="mt-1 block w-full border-gray-300 
-                            dark:border-gray-700 dark:bg-gray-900 
+                            class="mt-1 block w-full 
+                            border-gray-300 
+                            dark:border-gray-700 
+                            dark:bg-gray-900 
                             dark:text-gray-300 focus:border-indigo-500 
-                            dark:focus:border-indigo-600 
-                            focus:ring-indigo-500 dark:focus:ring-indigo-600 
+                            dark:focus:border-indigo-600 focus:ring-indigo-500 
+                            dark:focus:ring-indigo-600 
                             rounded-md shadow-sm">{{ $data->deskripsi }}</textarea>
                     </div>
                 </div>
 
                 <div class="mt-6 flex justify-end gap-3">
-                    <button type="button" x-on:click="$dispatch('close')""
+                    <button type="button" onclick="document.getElementById('createRuanganModal').close()"
                         class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
                         Batal
                     </button>
                     <x-primary-button class="ml-3">
-                        Simpan Ruangan
+                        Simpan Barang
                     </x-primary-button>
                 </div>
             </form>

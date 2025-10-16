@@ -79,9 +79,17 @@ class BarangController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Barang $barang)
+    public function show($param)
     {
-        //
+        $data = Barang::where('kode_barang', $param)->first();
+        $ruangan = Ruangan::all();
+        if ($data === null) {
+            return redirect()->
+            route('barang.index')
+            ->with('failed', 'data tidak ditemukan');
+        }
+
+        return view('barang.detail', compact('data', 'ruangan'));
     }
 
     /**

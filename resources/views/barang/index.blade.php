@@ -39,13 +39,13 @@
                             @forelse ($data as $item)
                                 <tr>
                                     <td class="px-6 py-2 text-sm text-gray-500 dark:text-gray-400">
-                                        {{ $item->kode_ruangan }}
+                                        {{ $item->kode_barang }}
                                     </td>
                                     <td class="px-6 py-2 text-sm text-gray-500 dark:text-gray-400">
-                                        {{ $item->nama_ruangan }}
+                                        {{ $item->nama_barang }}
                                     </td>
                                     <td class="px-6 py-2 text-sm text-gray-500 dark:text-gray-400">
-                                        {{ $item->lantai }}
+                                        {{ $item->brand }}
                                     </td>
                                     <td class="px-6 py-2 ">
                                         <a href="{{ route('barang.show', $item->kode_barang) }}"
