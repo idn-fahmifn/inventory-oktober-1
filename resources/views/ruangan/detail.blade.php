@@ -6,6 +6,16 @@
                     {{-- Grid utama untuk 2 kolom --}}
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
 
+                        @if (session('success'))
+                            <span>{{ session('success') }}</span>
+                        @endif
+
+                        @if ($errors->any())
+                            @foreach ($errors->all() as $item)
+                                {{ $item }}
+                            @endforeach
+                        @endif
+
                         <div class="flex flex-col justify-center">
                             <div>
                                 <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100">
@@ -72,7 +82,7 @@
 
     <x-modal name="show-edit" :show="$errors->userDeletion->isNotEmpty()" focusable>
         <div class="p-6">
-            <form method="POST" action="" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('ruangan.update', $data->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('put')
                 <div class="space-y-2">

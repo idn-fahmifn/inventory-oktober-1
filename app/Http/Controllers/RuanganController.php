@@ -6,6 +6,7 @@ use App\Models\Ruangan;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class RuanganController extends Controller
 {
@@ -42,10 +43,10 @@ class RuanganController extends Controller
 
 
         // - kondisi untuk mengatur gambar
-         if($request->hasFile('gambar')){
+        if ($request->hasFile('gambar')) {
             $path = 'public/images/ruangan'; // path
             $gambar = $request->file('gambar'); //gambar
-            $nama = 'gambar-ruangan_'.Carbon::now('Asia/Jakarta')->format('Ymdhis').'.'.$gambar->getClientOriginalExtension(); //mengganti nama
+            $nama = 'gambar-ruangan_' . Carbon::now('Asia/Jakarta')->format('Ymdhis') . '.' . $gambar->getClientOriginalExtension(); //mengganti nama
             $simpan['gambar'] = $nama; //dikirimkan ke database 
             $gambar->storeAs($path, $nama);
         }
@@ -62,11 +63,59 @@ class RuanganController extends Controller
         $data = Ruangan::where('kode_ruangan', $param)->first();
         $petugas = User::where('is_admin', false)->get();
 
-        if ($data === null){
+        if ($data === null) {
             return redirect()->route('ruangan.index')->with('failed', 'data tidak ditemukan');
         }
-
-
         return view('ruangan.detail', compact('petugas', 'data'));
+    }
+
+    public function update(Request $request, $param)
+    {
+        $data = Ruangan::findOrFail($param);
+        $request->validate([
+            'nama_ruangan' => ['required', 'string', 'max:100'],
+            'user_id' => ['required', 'numeric'],
+            'kode_ruangan' => ['required', 'string', 'max:100'],
+            'lantai' => ['required', 'string', 'max:20'],
+            'ukuran' => ['required', 'string', 'max:20'],
+            'gambar' => ['file', 'mimes:png,jpg,jpeg,webp,gif,svg,heic', 'max:10240'],
+            'deskripsi' => ['required']
+        ]);
+
+
+        // collection simpan data dari request
+        $simpan = [
+            'user_id' => $request->input('user_id'),
+            'nama_ruangan' => $request->input('nama_ruangan'),
+            'kode_ruangan' => $request->input('kode_ruangan'),
+            'lantai' => $request->input('lantai'),
+            'ukuran' => $request->input('ukuran'),
+            'deskripsi' => $request->input('deskripsi'),
+        ];
+
+        if ($request->hasFile('gambar')) {
+
+            // jika ada file baru. 
+            // mencari file lama by path. 
+            // hapus data.
+
+            $old_path = 'public/images/ruangan/'. $data->gambar;
+            if($data->gambar && Storage::exists($old_path)){
+                Storage::delete($old_path);
+            }
+
+            $path = 'public/images/ruangan'; // path
+            $gambar = $request->file('gambar'); //gambar
+            $nama = 'gambar-ruangan_' . Carbon::now('Asia/Jakarta')->format('Ymdhis') . '.' . $gambar->getClientOriginalExtension(); //mengganti nama
+            $simpan['gambar'] = $nama; //dikirimkan ke database 
+            $gambar->storeAs($path, $nama);
+        }
+
+        $data->update($simpan);
+        return back()->with('success', 'Data berhasil diubah');
+
+
+
+
     }
 }

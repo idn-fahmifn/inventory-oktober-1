@@ -22,6 +22,7 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->group(functio
     Route::get('ruangan', [RuanganController::class, 'index'])->name('ruangan.index');    
     Route::post('ruangan', [RuanganController::class, 'store'])->name('ruangan.store'); 
     Route::get('ruangan/{param}', [RuanganController::class, 'detail'])->name('ruangan.detail');    
+    Route::put('ruangan/{param}', [RuanganController::class, 'update'])->name('ruangan.update');    
 
 });
 
