@@ -80,8 +80,9 @@
 
     <x-modal name="show-edit" :show="$errors->userDeletion->isNotEmpty()" focusable>
         <div class="p-6">
-           <form method="POST" action="{{ route('barang.store') }}" enctype="multipart/form-data">
+           <form method="POST" action="{{ route('barang.update', $data->id) }}" enctype="multipart/form-data">
                 @csrf
+                @method('put')
                 <div class="space-y-2">
                     <div>
                         <x-input-label for="kode_barang" value="Kode Barang" />
