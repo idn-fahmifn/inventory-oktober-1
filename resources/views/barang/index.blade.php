@@ -72,7 +72,7 @@
 
     {{-- Modal Create Data Ruangan --}}
     <dialog id="createRuanganModal" class="p-0 backdrop:bg-black/50 rounded-lg shadow-2xl dark:bg-gray-900">
-        <div class="p-6 w-[400px]">
+        <div class="p-6 w-[50dvw]">
             <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 border-b pb-2 dark:border-gray-700">
                 Input Barang Baru</h3>
             <form method="POST" action="{{ route('barang.store') }}" enctype="multipart/form-data">
@@ -152,7 +152,7 @@
                         Batal
                     </button>
                     <x-primary-button class="ml-3">
-                        Simpan Ruangan
+                        Simpan Barang
                     </x-primary-button>
                 </div>
             </form>
