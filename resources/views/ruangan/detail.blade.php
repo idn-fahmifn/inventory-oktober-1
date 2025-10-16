@@ -54,7 +54,7 @@
                                 </p>
 
 
-                                <form action="" method="post" class="py-6">
+                                <form action="{{ route('ruangan.delete', $data->id) }}" method="post" class="py-6">
                                     @csrf
                                     @method('delete')
                                     <button type="submit" onclick="return confirm('Yakin mau dihapus?')"
@@ -63,9 +63,7 @@
                                         x-on:click.prevent="$dispatch('open-modal', 'show-edit')"
                                         class="rounded-md bg-yellow-500 px-2.5 py-1.5 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-yellow-700">Edit</button>
                                 </form>
-
                             </div>
-
                         </div>
                     </div>
                 </div>

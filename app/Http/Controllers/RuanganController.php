@@ -99,23 +99,34 @@ class RuanganController extends Controller
             // mencari file lama by path. 
             // hapus data.
 
-            $old_path = 'public/images/ruangan/'. $data->gambar;
-            if($data->gambar && Storage::exists($old_path)){
+            $old_path = 'public/images/ruangan/' . $data->gambar;
+            if ($data->gambar && Storage::exists($old_path)) {
                 Storage::delete($old_path);
             }
 
             $path = 'public/images/ruangan'; // path
             $gambar = $request->file('gambar'); //gambar
-            $nama = 'gambar-ruangan_' . Carbon::now('Asia/Jakarta')->format('Ymdhis') . '.' . $gambar->getClientOriginalExtension(); //mengganti nama
+            $nama = 'gambar-ruangan_' . Carbon::now('Asia/Jakarta')
+                ->format('Ymdhis') . '.' . $gambar
+                    ->getClientOriginalExtension(); //mengganti nama
             $simpan['gambar'] = $nama; //dikirimkan ke database 
             $gambar->storeAs($path, $nama);
         }
 
         $data->update($simpan);
         return back()->with('success', 'Data berhasil diubah');
-
-
-
-
     }
+
+    public function delete($param)
+    {
+        $data = Ruangan::findOrFail($param);
+
+        $old_path = 'public/images/ruangan/' . $data->gambar;
+        if ($data->gambar && Storage::exists($old_path)) {
+            Storage::delete($old_path);
+        }
+        $data->delete();
+        return redirect()->route('ruangan.index')->with('success', 'Data berhasil dihapus');
+    }
+
 }
