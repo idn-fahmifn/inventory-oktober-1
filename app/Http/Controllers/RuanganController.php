@@ -17,6 +17,8 @@ class RuanganController extends Controller
 
     public function store(Request $request)
     {
+        // - buat validasi data
+
         $request->validate([
             'nama_ruangan' => ['required', 'string', 'max:100'],
             'user_id' => ['required', 'numeric'],
@@ -26,6 +28,7 @@ class RuanganController extends Controller
             'gambar' => ['required', 'file', 'mimes:png,jpg,jpeg,webp,gif,svg,heic', 'max:10240'],
             'deskripsi' => ['required']
         ]);
+        // - buatkan array untuk save data
 
         $simpan = [
             'user_id' => $request->input('user_id'),
@@ -36,17 +39,20 @@ class RuanganController extends Controller
             'deskripsi' => $request->input('deskripsi'),
         ];
 
-        // kondisi upload image
-        if($request->hasFile('gambar')){
+
+        // - kondisi untuk mengatur gambar
+         if($request->hasFile('gambar')){
             $path = 'public/images/ruangan'; // path
             $gambar = $request->file('gambar'); //gambar
             $nama = 'gambar-ruangan_'.Carbon::now()->format('Ymdhis').'.'.$gambar->getClientOriginalExtension(); //mengganti nama
-            $simpan['gambar'] = $nama;
+            $simpan['gambar'] = $nama; //dikirimkan ke database 
             $gambar->storeAs($path, $nama);
         }
-        // return $simpan;
 
+        // - Eloquent create data ruangan
         Ruangan::create($simpan);
 
+        // - kembalikan nilai ke index.
+        return redirect()->route('ruangan.index')->with('success', 'Data Berhasil disimpan');
     }
 }
