@@ -36,12 +36,31 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                            <tr>
-                                <td colspan="4"
-                                    class="px-6 py-4 text-center text-sm italic text-gray-500 dark:text-gray-400">
-                                    Belum ada data ruangan.
-                                </td>
-                            </tr>
+                            @forelse ($data as $item)
+                                <tr>
+                                    <td class="px-6 py-2 text-sm text-gray-500 dark:text-gray-400">
+                                        {{ $item->kode_ruangan }}
+                                    </td>
+                                    <td class="px-6 py-2 text-sm text-gray-500 dark:text-gray-400">
+                                        {{ $item->nama_ruangan }}
+                                    </td>
+                                    <td class="px-6 py-2 text-sm text-gray-500 dark:text-gray-400">
+                                        {{ $item->lantai }}
+                                    </td>
+                                    <td class="px-6 py-2 ">
+                                        <a href="{{ route('ruangan.detail', $item->kode_ruangan) }}"
+                                            class="text-sm text-blue-500 dark:text-blue-200 font-semibold">Detail</a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4"
+                                        class="px-6 py-4 text-center text-sm italic text-gray-500 dark:text-gray-400">
+                                        Belum ada data Petugas.
+                                    </td>
+                                </tr>
+                            @endforelse
+
                             {{-- Loop data ruangan akan masuk di sini --}}
                         </tbody>
                     </table>

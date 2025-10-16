@@ -11,8 +11,9 @@ class RuanganController extends Controller
 {
     public function index()
     {
+        $data = Ruangan::all();
         $petugas = User::where('is_admin', false)->get();
-        return view('ruangan.index', compact('petugas'));
+        return view('ruangan.index', compact('petugas', 'data'));
     }
 
     public function store(Request $request)
@@ -44,7 +45,7 @@ class RuanganController extends Controller
          if($request->hasFile('gambar')){
             $path = 'public/images/ruangan'; // path
             $gambar = $request->file('gambar'); //gambar
-            $nama = 'gambar-ruangan_'.Carbon::now()->format('Ymdhis').'.'.$gambar->getClientOriginalExtension(); //mengganti nama
+            $nama = 'gambar-ruangan_'.Carbon::now('Asia/Jakarta')->format('Ymdhis').'.'.$gambar->getClientOriginalExtension(); //mengganti nama
             $simpan['gambar'] = $nama; //dikirimkan ke database 
             $gambar->storeAs($path, $nama);
         }
@@ -54,5 +55,18 @@ class RuanganController extends Controller
 
         // - kembalikan nilai ke index.
         return redirect()->route('ruangan.index')->with('success', 'Data Berhasil disimpan');
+    }
+
+    public function detail($param)
+    {
+        $data = Ruangan::where('kode_ruangan', $param)->first();
+        $petugas = User::where('is_admin', false)->get();
+
+        if ($data === null){
+            return redirect()->route('ruangan.index')->with('failed', 'data tidak ditemukan');
+        }
+
+
+        return view('ruangan.detail', compact('petugas', 'data'));
     }
 }
